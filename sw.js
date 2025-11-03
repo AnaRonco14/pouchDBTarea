@@ -1,9 +1,9 @@
 const CACHE_NAME = 'pwa-tareas-v1';
 const PRECACHE_URLS = [
   '/', // importante si tu app se sirve en la raíz
-  '/index.html',
-  '/main.js',
-  '/manifest.json',
+  './index.html',
+  './main.js',
+  './manifest.json',
   './images/192.png',
   './images/512.png',
   'https://cdn.jsdelivr.net/npm/pouchdb@9.0.0/dist/pouchdb.min.js'
