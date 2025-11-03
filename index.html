@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PouchDB - Gestión de tareas</title>
+
+    <!-- Manifest para instalable -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#3b82f6" />
+
+    <style>
+      body { font-family: system-ui, Arial; max-width: 720px; margin: 20px auto; padding: 0 12px; }
+      h1 { margin-bottom: 8px; }
+      fieldset { border-radius: 8px; padding: 12px; }
+      #lista { margin-top: 16px; }
+      .tarea { display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #eee; align-items:center; }
+      .meta { font-size:0.9rem; color:#555; }
+      .activo { color: green; font-weight: 600; }
+      .inactivo { color: gray; font-weight: 600; text-decoration: line-through; }
+      button { cursor: pointer; padding: 6px 10px; border-radius:6px; border: none; background:#3b82f6; color:white; }
+      .btn-secondary { background:#6b7280; }
+    </style>
+  </head>
+  <body>
+    <h1>Gestión de tareas (PWA)</h1>
+
+    <fieldset>
+      <legend>Nueva tarea</legend>
+      <p><input type="text" id="nombre" placeholder="Descripción..." /></p>
+      <p>
+        <label for="fecha">Fecha: </label>
+        <input type="date" id="fecha" />
+      </p>
+      <p>
+        <button type="button" id="btnAdd">Agregar tarea</button>
+        <button type="button" id="btnList" class="btn-secondary">Listar tareas</button>
+      </p>
+    </fieldset>
+
+    <div id="lista"></div>
+
+    <p style="margin-top:12px; font-size:0.9rem">
+      Estado: <span id="statusSW">-</span>
+    </p>
+
+    <script src="https://cdn.jsdelivr.net/npm/pouchdb@9.0.0/dist/pouchdb.min.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+      // Registrar service worker para PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js').then(reg => {
+            console.log('SW registrado', reg);
+            document.getElementById('statusSW').innerText = 'Service Worker registrado';
+          }).catch(err => {
+            console.warn('Registro SW falló', err);
+            document.getElementById('statusSW').innerText = 'SW error';
+          });
+        });
+      } else {
+        document.getElementById('statusSW').innerText = 'Service Worker no soportado';
+      }
+    </script>
+  </body>
+</html>
